@@ -9,7 +9,12 @@ function CurrencyCalculatorFactor(){
 		request.open("GET", url);
 		request.onreadystatechange = function(){
 			if((request.status == 200) && (request.readyState == 4)){
-				console.log(request.responseText);
+				var dataJSON = JSON.parse(request.responseText);
+				for(key in dataJSON){
+					var currency = CurrencyObjectFactory(key, dataJSON[key].USD);
+					currencyCalculator.currencyObjCollection.push(currency);
+				}
+				console.log(currencyCalculator.currencyObjCollection);
 			}
 		}
 		request.send();
